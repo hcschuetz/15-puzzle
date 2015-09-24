@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {createStore} from 'redux';
+import {Provider, connect} from 'react-redux';
 
 import {randomPermutation, permute, permutationTranspositionCount} from "./permutation";
 
@@ -19,13 +21,21 @@ function randomState() {
 	};
 }
 
+function move(i, j) {
+	return {
+		type: "MOVE_TO_EMPTY",
+		payload: {i, j}
+	};
+}
+
 const initialState = randomState();
 
-class Puzzle extends React.Component {
-	state = initialState;
-	move(i, j) {
-		const {empty, fields} = this.state;
-		this.setState({
+function puzzleReducer(state = initialState, {type, payload}) {
+	switch (type) {
+	case "MOVE_TO_EMPTY": {
+		const {i, j} = payload;
+		const {fields, empty} = state;
+		return {
 			empty: {i, j},
 			fields: fields.map(
 				(r, ii) => r.map(
@@ -35,10 +45,17 @@ class Puzzle extends React.Component {
 						f
 				)
 			)
-		});
+		};
 	}
+	default:
+		return state;
+	}
+}
+
+@connect(state => state)
+class Puzzle extends React.Component {
 	render() {
-		const {empty, fields} = this.state;
+		const {dispatch, empty, fields} = this.props;
 		return (
 			<table>
 				<tbody>
@@ -56,7 +73,7 @@ class Puzzle extends React.Component {
 													border: label === 0 ? undefined : "1px solid black",
 													backgroundColor: movable ? "#F8F8F8" : undefined
 												}}
-												onClick={movable ? () => this.move(i, j) : undefined}
+												onClick={movable ? () => dispatch(move(i, j)) : undefined}
 												key={j}
 											>
 												{
@@ -75,7 +92,11 @@ class Puzzle extends React.Component {
 	}
 }
 
+const store = createStore(puzzleReducer);
+
 ReactDOM.render(
-	<Puzzle />,
+	<Provider store={store}>
+		<Puzzle />
+	</Provider>,
 	document.getElementById('mnt')
 );
