@@ -52,45 +52,41 @@ function puzzleReducer(state = initialState, {type, payload}) {
 	}
 }
 
-@connect(state => state)
-class Puzzle extends React.Component {
-	render() {
-		const {dispatch, empty, fields} = this.props;
-		return (
-			<table>
-				<tbody>
-					{
-						fields.map((row, i) => (
-							<tr key={i}>
-								{
-									row.map((label, j) => {
-										const movable = Math.abs(i - empty.i) + Math.abs(j - empty.j) == 1;
-										return (
-											<td style={{
-													textAlign: "center",
-													width: "2em",
-													height: "2em",
-													border: label === 0 ? undefined : "1px solid black",
-													backgroundColor: movable ? "#F8F8F8" : undefined
-												}}
-												onClick={movable ? () => dispatch(move(i, j)) : undefined}
-												key={j}
-											>
-												{
-													label !== 0 && label
-												}
-											</td>
-										)
-									})
-								}
-							</tr>
-						))
-					}
-				</tbody>
-			</table>
-		);
-	}
-}
+
+const Puzzle = connect(state => state)(
+	({dispatch, empty, fields}) =>
+	<table>
+		<tbody>
+			{
+				fields.map((row, i) => (
+					<tr key={i}>
+						{
+							row.map((label, j) => {
+								const movable = Math.abs(i - empty.i) + Math.abs(j - empty.j) == 1;
+								return (
+									<td style={{
+											textAlign: "center",
+											width: "2em",
+											height: "2em",
+											border: label === 0 ? undefined : "1px solid black",
+											backgroundColor: movable ? "#F8F8F8" : undefined
+										}}
+										onClick={movable ? () => dispatch(move(i, j)) : undefined}
+										key={j}
+									>
+										{
+											label !== 0 && label
+										}
+									</td>
+								)
+							})
+						}
+					</tr>
+				))
+			}
+		</tbody>
+	</table>
+);
 
 const store = createStore(puzzleReducer);
 
