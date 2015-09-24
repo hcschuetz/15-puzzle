@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore} from 'redux';
+import {compose, createStore} from 'redux';
+import {devTools, persistState} from 'redux-devtools';
+import {DevTools, DebugPanel, LogMonitor} from 'redux-devtools/lib/react';
 import {Provider, connect} from 'react-redux';
 
 import {randomPermutation, permute, permutationTranspositionCount} from "./permutation";
@@ -88,11 +90,27 @@ const Puzzle = connect(state => state)(
 	</table>
 );
 
-const store = createStore(puzzleReducer);
+const finalCreateStore =
+	DEBUG
+	? compose(
+		devTools(),
+		persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+	)(createStore)
+	: createStore;
+
+const store = finalCreateStore(puzzleReducer);
 
 ReactDOM.render(
-	<Provider store={store}>
-		<Puzzle />
-	</Provider>,
+	<div>
+		<Provider store={store}>
+			<Puzzle />
+		</Provider>
+		{
+			DEBUG &&
+			<DebugPanel top right bottom>
+				<DevTools select={state => state} store={store} monitor={LogMonitor} />
+			</DebugPanel>
+		}
+	</div>,
 	document.getElementById('mnt')
 );
