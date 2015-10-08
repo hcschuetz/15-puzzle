@@ -9,10 +9,10 @@ var debug = !(args.production || args.p);
 
 var config = {
 	target: "web",
-	entry: {
-		"index.html": "!file?name=[path][name].[ext]&context=./src!./src/index.html",
-		bundle: "./src/index.js",
-	},
+	entry: [
+		"!file?name=[path][name].[ext]&context=./src!./src/index.html",
+		"./src/index.js",
+	],
 	output: {
 		path: path.resolve("dist"),
 		filename: "bundle.js",
