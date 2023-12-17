@@ -1,23 +1,18 @@
 {
   "name": "15-puzzle",
   "version": "0.0.1",
-  "description": "",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server"
+    "start": "vite src/",
+    "build": "vite build --base ./ --outDir ../dist --emptyOutDir src/"
   },
-  "author": "",
+  "author": "Heribert Schütz",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^5.8.25",
-    "babel-loader": "^5.3.2",
-    "file-loader": "^0.8.4",
-    "minimist": "^1.2.0",
     "react": "^0.14.0-rc1",
     "react-dom": "^0.14.0-rc1",
     "react-redux": "^3.0.0",
     "redux": "^3.0.0",
     "redux-devtools": "^2.1.3",
-    "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.12.0"
+    "vite": "^5.0.10"
   }
 }

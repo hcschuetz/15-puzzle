@@ -19,7 +19,7 @@ function randomState() {
 		p = p[0] && p[1] ? permute(p, [0,1]) : permute(p, [2,3]);
 	return {
 		empty: {i, j},
-		fields: [for (i of four) [for (j of four) p[4*i+j]]]
+		fields: four.map(i => four.map(j => p[4*i+j])),
 	};
 }
 
@@ -89,6 +89,8 @@ const Puzzle = connect(state => state)(
 		</tbody>
 	</table>
 );
+
+const DEBUG = import.meta.env.MODE === "development";
 
 const finalCreateStore =
 	DEBUG
