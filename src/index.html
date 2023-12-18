@@ -4,10 +4,41 @@
 <head>
   <meta charset="UTF-8">
   <title>15 Puzzle</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    td {
+    	text-align: center;
+      width: 2em;
+      height: 2em;
+      border: 1px solid black;
+    }
+  </style>
 </head>
 
 <body>
   <div id="mnt"></div>
   <script type="module" src="index.jsx"></script>
+  <h2>15 Puzzle</h2>
+
+  <p>
+    In the random grid above, click one of the tiles next to the hole
+    to move it to the hole.
+  </p>
+  <p>
+    Can you sort the tiles?  For example to the following order?
+  </p>
+  <table>
+		<tbody>
+      <tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+      <tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+      <tr><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+      <tr><td>13</td><td>14</td><td>15</td></tr>
+		</tbody>
+	</table>
+  <p>
+    Reload the page to get a new random grid.
+  </p>
 </body>
 </html>

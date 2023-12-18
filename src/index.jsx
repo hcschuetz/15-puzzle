@@ -67,10 +67,7 @@ const Puzzle = connect(state => state)(
 								const movable = Math.abs(i - empty.i) + Math.abs(j - empty.j) == 1;
 								return (
 									<td style={{
-											textAlign: "center",
-											width: "2em",
-											height: "2em",
-											border: label === 0 ? undefined : "1px solid black",
+											border: label === 0 ? "none" : "1px solid black",
 											backgroundColor: movable ? "#F8F8F8" : undefined
 										}}
 										onClick={movable ? () => dispatch(move(i, j)) : undefined}
